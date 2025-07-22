@@ -13,10 +13,23 @@ return new class extends Migration
     {
         Schema::create('meetings', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
+            
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
+            $table->string('room_name');
+            $table->text('room_url');
+            $table->string('meeting_id');
+
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      */

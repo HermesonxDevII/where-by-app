@@ -11,12 +11,46 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    <x-alerts />
                     <form
                         action="{{ route('meetings.store') }}"
                         method="POST"
                         class="flex flex-col gap-3"
                     >
                         @csrf()
+                        <div>
+                            <label
+                                for="name"
+                                class="block mb-2 text-sm font-medium text-gray-900"
+                            >Nome</label>
+
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                placeholder="Digite o Nome da Reunião"
+                                value="{{ old('name') }}"
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                for="description"
+                                class="block mb-2 text-sm font-medium text-gray-900"
+                            >Descrição</label>
+
+                            <input
+                                type="text"
+                                id="description"
+                                name="description"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                placeholder="Digite a Descrição da Reunião"
+                                value="{{ old('description') }}"
+                            />
+                        </div>
+
                         <div>
                             <label
                                 for="datetime_stream"

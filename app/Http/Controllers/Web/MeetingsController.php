@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{ Log, Http };
-use Carbon\Carbon;
+use App\Http\Requests\{ StoreMeetingRequest };
+use App\Models\{ Meeting };
 
 class MeetingsController extends Controller
 {
     public function index(Request $request)
     {
-        return view('meetings.index');
+        $meetings = Meeting::get();
+
+        return view('meetings.index', compact('meetings'));
     }
 
     public function create(Request $request)
@@ -19,8 +23,10 @@ class MeetingsController extends Controller
         return view('meetings.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreMeetingRequest $request)
     {
+        $validatedData = $request->validated();
+
         $endDate = Carbon::parse($request->datetime_stream, 'America/Sao_Paulo')
             ->setSeconds(0)
             ->timezone('UTC')
@@ -32,6 +38,25 @@ class MeetingsController extends Controller
             ->post('https://api.whereby.dev/v1/meetings', [
                 'endDate' => $endDate
             ]);
+
+        if ($response->failed()) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors(['error' => 'Não foi possível criar a sala de transmissão. Tente novamente mais tarde.']);
+        }
+
+        $apiData = $response->json();
+
+        $user = loggedUser()->meetings()->create([
+            'name'        => $validatedData['name'],
+            'description' => $validatedData['description'],
+            "start_date"   => $apiData['startDate'],
+            "end_date"     => $apiData['endDate'],
+            "room_name"    => $apiData['roomName'],
+            "room_url"     => $apiData['roomUrl'],
+            "meeting_id"   => $apiData['meetingId']
+        ]);
 
         return redirect()
             ->route('meetings.index')
