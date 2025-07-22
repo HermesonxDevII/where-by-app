@@ -43,14 +43,14 @@ class Meeting extends Model
     public function startDate(): Attribute
     {
         return Attribute::make(
-            fn (string $value) => Carbon::make($value)->format('d/m/Y H:i')
+            fn (string $value) => Carbon::make($value)->subHours(3)->format('d/m/Y H:i')
         );
     }
 
     public function endDate(): Attribute
     {
         return Attribute::make(
-            fn (string $value) => Carbon::make($value)->format('d/m/Y H:i')
+            fn (string $value) => Carbon::make($value)->subHours(3)->format('d/m/Y H:i')
         );
     }
 }

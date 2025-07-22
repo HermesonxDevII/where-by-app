@@ -24,9 +24,6 @@ class MeetingsController extends Controller
 
     public function store(StoreMeetingRequest $request)
     {
-        // Log::info('request', [$request->all()]);
-        // return view('meetings.create');
-
         $validatedData = $request->validated();
 
         $token = getWherebyKey();
@@ -65,9 +62,7 @@ class MeetingsController extends Controller
 
         $apiData = $response->json();
 
-        $user = loggedUser();
-
-        $user->meetings()->create([
+        $meeting = loggedUser()->meetings()->create([
             'name'            => $validatedData['name'],
             'description'     => $validatedData['description'],
             'start_date'      => formatBrazilDate($apiData['startDate']),
@@ -78,8 +73,6 @@ class MeetingsController extends Controller
             'viewer_room_url' => $apiData['viewerRoomUrl'],
             'meeting_id'      => $apiData['meetingId']
         ]);
-        
-        $meeting = $user->meeting;
 
         return redirect()
             ->route('meetings.show', $meeting->id)

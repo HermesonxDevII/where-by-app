@@ -30,7 +30,7 @@ if (!function_exists('formatUTCDate')) {
 if (!function_exists('formatBrazilDate')) {
     function formatBrazilDate(string $value)
     {
-        return Carbon::parse($value, 'America/Fortaleza')->format('Y-m-d H:i:s');
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 }
 
