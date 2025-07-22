@@ -30,7 +30,7 @@ class MeetingsController extends Controller
 
         $data = [
             'endDate'        => formatUTCDate($validatedData['end_dateTime']),
-            'isLocked'       => filter_var($validatedData['is_locked'], FILTER_VALIDATE_BOOLEAN),
+            'isLocked'       => filter_var($validatedData['is_locked'] ?? false, FILTER_VALIDATE_BOOLEAN),
             'roomMode'       => $validatedData['type'],
             'roomNamePrefix' => generateSlug($validatedData['name']),
             'recording' => [
@@ -74,13 +74,15 @@ class MeetingsController extends Controller
             'meeting_id'      => $apiData['meetingId']
         ]);
 
-        return redirect()
-            ->route('meetings.show', $meeting->id)
-            ->with(['message' => 'Transmissão Iniciada com Sucesso!']);
+        return redirect()->route('meetings.show', $meeting->id);
     }
 
     public function show(Request $request, Meeting $meeting)
     {
+        if (!$meeting) {
+            return redirect()->route('meetings.index');
+        }
+
         $isHost = loggedUser()->id === $meeting->user_id;
 
         return view('meetings.show', compact('meeting', 'isHost'));
@@ -96,8 +98,26 @@ class MeetingsController extends Controller
 
     }
     
-    public function destroy(Request $request)
+    public function destroy(Request $request, Meeting $meeting)
     {
+        if (!loggedUser()->id === $meeting->user_id) {
+            return redirect()->route('meetings.index');
+        }
 
+        $token = getWherebyKey();
+
+        $response = Http::withToken($token)
+            ->delete("https://api.whereby.dev/v1/meetings/{$meeting->meeting_id}");
+
+        if ($response->failed()) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors(['error' => 'Não foi possível deletar a sala de transmissão. Tente novamente mais tarde.']);
+        }
+
+        $meeting->delete();
+
+        return redirect()->route('meetings.index');
     }
 }

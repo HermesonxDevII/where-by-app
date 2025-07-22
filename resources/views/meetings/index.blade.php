@@ -18,11 +18,16 @@
                 <div class="p-6 text-gray-900">
                     <x-alerts />
                     
-                    @if ($meetings)
-                        @foreach ($meetings as $meeting)
-                            <x-meeting-card :meeting="$meeting" />
-                        @endforeach
-                    @endif
+                    @forelse ($meetings as $meeting)
+                        <x-meeting-card :meeting="$meeting" />
+                    @empty
+                        <div
+                            class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:text-blue-400"
+                            role="alert"
+                        >
+                            <span class="font-medium">Nenhuma reunião encontrada.</span>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
