@@ -16,7 +16,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="text-gray-900 h-[calc(100vh-200px)]">
-                    <whereby-embed room="{{ $meeting->room_url }}" />
+                    <whereby-embed
+                        room="{{$isHost
+                            ? $meeting->host_room_url
+                            : $meeting->viewer_room_url
+                        }}"
+                    />
                 </div>
             </div>
         </div>

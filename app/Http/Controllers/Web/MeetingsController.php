@@ -88,7 +88,9 @@ class MeetingsController extends Controller
 
     public function show(Request $request, Meeting $meeting)
     {
-        return view('meetings.show', compact('meeting'));
+        $isHost = loggedUser()->id === $meeting->user_id;
+
+        return view('meetings.show', compact('meeting', 'isHost'));
     }
     
     public function edit(Request $request)
