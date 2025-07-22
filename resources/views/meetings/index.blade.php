@@ -18,9 +18,11 @@
                 <div class="p-6 text-gray-900">
                     <x-alerts />
                     
-                    @foreach ($meetings as $meeting)
-                        <x-meeting-card :meeting="$meeting" />
-                    @endforeach
+                    @if ($meetings)
+                        @foreach ($meetings as $meeting)
+                            <x-meeting-card :meeting="$meeting" />
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>

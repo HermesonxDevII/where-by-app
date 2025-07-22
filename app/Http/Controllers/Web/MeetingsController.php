@@ -25,19 +25,37 @@ class MeetingsController extends Controller
 
     public function store(StoreMeetingRequest $request)
     {
+        // Log::info('request', [$request->all()]);
+        // return view('meetings.create');
+
         $validatedData = $request->validated();
 
-        $endDate = Carbon::parse($request->datetime_stream, 'America/Sao_Paulo')
+        $endDate = Carbon::parse($request->end_dateTime, 'America/Sao_Paulo')
             ->setSeconds(0)
             ->timezone('UTC')
             ->format('Y-m-d\TH:i:s.000\Z');
 
         $token = getWherebyKey();
 
+        $data = [
+            'endDate'   => $endDate,
+            'isLocked'  => filter_var($validatedData['is_locked'], FILTER_VALIDATE_BOOLEAN),
+            'roomMode'  => $validatedData['type'],
+            'recording' => [
+                "type" => $validatedData['record_type'],
+                "destination" => [
+                    "provider"        => $validatedData['record_location'],
+                    "bucket"          => "",
+                    "accessKeyId"     => "",
+                    "accessKeySecret" => "",
+                    "fileFormat"      => $validatedData['record_format']
+                ],
+                "startTrigger" => $validatedData['record_trigger']
+            ]
+        ];
+
         $response = Http::withToken($token)
-            ->post('https://api.whereby.dev/v1/meetings', [
-                'endDate' => $endDate
-            ]);
+            ->post('https://api.whereby.dev/v1/meetings', $data);
 
         if ($response->failed()) {
             return redirect()
