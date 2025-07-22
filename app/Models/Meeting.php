@@ -21,6 +21,8 @@ class Meeting extends Model
         'end_date',
         'room_name',
         'room_url',
+        'host_room_url',
+        'viewer_room_url',
         'meeting_id'
     ];
 

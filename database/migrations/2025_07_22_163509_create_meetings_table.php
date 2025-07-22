@@ -24,6 +24,8 @@ return new class extends Migration
             $table->timestamp('end_date');
             $table->string('room_name');
             $table->text('room_url');
+            $table->text('host_room_url');
+            $table->text('viewer_room_url');
             $table->string('meeting_id');
 
             $table->timestamps();

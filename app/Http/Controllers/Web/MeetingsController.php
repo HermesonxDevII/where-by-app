@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{ Log, Http };
 use App\Http\Requests\{ StoreMeetingRequest };
@@ -30,27 +29,27 @@ class MeetingsController extends Controller
 
         $validatedData = $request->validated();
 
-        $endDate = Carbon::parse($request->end_dateTime, 'America/Sao_Paulo')
-            ->setSeconds(0)
-            ->timezone('UTC')
-            ->format('Y-m-d\TH:i:s.000\Z');
-
         $token = getWherebyKey();
 
         $data = [
-            'endDate'   => $endDate,
-            'isLocked'  => filter_var($validatedData['is_locked'], FILTER_VALIDATE_BOOLEAN),
-            'roomMode'  => $validatedData['type'],
+            'endDate'        => formatUTCDate($validatedData['end_dateTime']),
+            'isLocked'       => filter_var($validatedData['is_locked'], FILTER_VALIDATE_BOOLEAN),
+            'roomMode'       => $validatedData['type'],
+            'roomNamePrefix' => generateSlug($validatedData['name']),
             'recording' => [
-                "type" => $validatedData['record_type'],
-                "destination" => [
-                    "provider"        => $validatedData['record_location'],
-                    "bucket"          => "",
-                    "accessKeyId"     => "",
-                    "accessKeySecret" => "",
-                    "fileFormat"      => $validatedData['record_format']
+                'type' => $validatedData['record_type'],
+                'destination' => [
+                    'provider'        => $validatedData['record_location'],
+                    'bucket'          => '',
+                    'accessKeyId'     => '',
+                    'accessKeySecret' => '',
+                    'fileFormat'      => $validatedData['record_format']
                 ],
-                "startTrigger" => $validatedData['record_trigger']
+                'startTrigger' => $validatedData['record_trigger']
+            ],
+            'fields' => [
+                'hostRoomUrl',
+                'viewerRoomUrl'
             ]
         ];
 
@@ -69,13 +68,15 @@ class MeetingsController extends Controller
         $user = loggedUser();
 
         $user->meetings()->create([
-            'name'        => $validatedData['name'],
-            'description' => $validatedData['description'],
-            'start_date'   => Carbon::parse($apiData['startDate'], 'America/Fortaleza')->format('Y-m-d H:i:s'),
-            'end_date'     => Carbon::parse($apiData['endDate'], 'America/Fortaleza')->format('Y-m-d H:i:s'),
-            'room_name'    => $apiData['roomName'],
-            'room_url'     => $apiData['roomUrl'],
-            'meeting_id'   => $apiData['meetingId']
+            'name'            => $validatedData['name'],
+            'description'     => $validatedData['description'],
+            'start_date'      => formatBrazilDate($apiData['startDate']),
+            'end_date'        => formatBrazilDate($apiData['endDate']),
+            'room_name'       => $apiData['roomName'],
+            'room_url'        => $apiData['roomUrl'],
+            'host_room_url'   => $apiData['hostRoomUrl'],
+            'viewer_room_url' => $apiData['viewerRoomUrl'],
+            'meeting_id'      => $apiData['meetingId']
         ]);
         
         $meeting = $user->meeting;
