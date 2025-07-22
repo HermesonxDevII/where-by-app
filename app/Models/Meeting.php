@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\{ BelongsTo };
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\{ Model, Builder };
 use Carbon\Carbon;
 
 class Meeting extends Model
 {
-    protected $connection = '';
+    protected $connection = 'mysql';
     protected $table = 'meetings';
     protected $primaryKey = 'id';
     
@@ -23,6 +23,13 @@ class Meeting extends Model
         'room_url',
         'meeting_id'
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('endDate', function (Builder $builder) {
+            $builder->where('end_date', '>=', now());
+        });
+    }
 
     public $timestamps = true;
 
