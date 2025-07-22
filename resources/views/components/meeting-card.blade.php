@@ -33,8 +33,8 @@
     </div>
     
     <div class="flex">
-        <button
-            type="button"
+        <a
+            href="{{ route('meetings.show', $meeting->id) }}"
             class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-4 py-1.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition duration-300"
         >
             <svg
@@ -49,6 +49,6 @@
                 />
             </svg>
             Assistir
-        </button>
+        </a>
     </div>
 </div>

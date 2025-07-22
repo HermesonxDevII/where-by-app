@@ -51,11 +51,11 @@ class MeetingsController extends Controller
         $user = loggedUser()->meetings()->create([
             'name'        => $validatedData['name'],
             'description' => $validatedData['description'],
-            "start_date"   => $apiData['startDate'],
-            "end_date"     => $apiData['endDate'],
-            "room_name"    => $apiData['roomName'],
-            "room_url"     => $apiData['roomUrl'],
-            "meeting_id"   => $apiData['meetingId']
+            'start_date'   => Carbon::parse($apiData['startDate'])->format('Y-m-d H:i:s'),
+            'end_date'     => Carbon::parse($apiData['endDate'])->format('Y-m-d H:i:s'),
+            'room_name'    => $apiData['roomName'],
+            'room_url'     => $apiData['roomUrl'],
+            'meeting_id'   => $apiData['meetingId']
         ]);
 
         return redirect()
@@ -63,9 +63,9 @@ class MeetingsController extends Controller
             ->with(['message' => 'Transmissão Iniciada com Sucesso!']);
     }
 
-    public function show(Request $request)
+    public function show(Request $request, Meeting $meeting)
     {
-
+        return view('meetings.show', compact('meeting'));
     }
     
     public function edit(Request $request)
