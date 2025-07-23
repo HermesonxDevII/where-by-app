@@ -49,7 +49,7 @@ class MeetingsController extends Controller
                 'viewerRoomUrl'
             ]
         ];
-
+        
         $response = Http::withToken($token)
             ->post('https://api.whereby.dev/v1/meetings', $data);
 
@@ -98,6 +98,13 @@ class MeetingsController extends Controller
 
     }
     
+    public function history(Request $request)
+    {
+        $meetings = Meeting::withoutGlobalScope('endDate')->get();
+        Log::info('meetings', [$meetings]);
+        return view('meetings.history', compact('meetings'));
+    }
+
     public function destroy(Request $request, Meeting $meeting)
     {
         if (!loggedUser()->id === $meeting->user_id) {

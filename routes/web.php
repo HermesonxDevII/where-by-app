@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('/meetings', MeetingsController::class);
+    Route::get('/meetings/history', [MeetingsController::class, 'history'])->name('meetings.history');
 });
 
 require __DIR__.'/auth.php';
