@@ -105,6 +105,23 @@ class MeetingsController extends Controller
         return view('meetings.history', compact('meetings'));
     }
 
+    public function recovery_history(Request $request)
+    {
+        $token = getWherebyKey();
+
+        $response = Http::withToken($token)
+            ->get("https://api.whereby.dev/v1/meetings?fields=hostRoomUrl,viewerRoomUrl");
+
+        if ($response->failed()) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors(['error' => 'Não foi possível criar a sala de transmissão. Tente novamente mais tarde.']);
+        }
+
+        return back();
+    }
+
     public function info(Request $request, Meeting $meeting)
     {
         if (!$meeting) {

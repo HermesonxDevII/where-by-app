@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/meetings/history', [MeetingsController::class, 'history'])->name('meetings.history');
+    Route::get('/meetings/recovery-history', [MeetingsController::class, 'recovery_history'])->name('meetings.recovery_history');
     Route::get('/meetings/info/{meeting}', [MeetingsController::class, 'info'])->name('meetings.info');
     Route::post('/meetings/change-color/{meeting}', [MeetingsController::class, 'change_color'])->name('meetings.change_color');
     Route::resource('/meetings', MeetingsController::class);
