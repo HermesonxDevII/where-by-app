@@ -103,11 +103,11 @@
         <div class="flex flex-row gap-2">
             <button
                 type="submit"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition duration-300"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 transition duration-300"
             >Salvar</button>
 
             <button
-                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 transition duration-300"
+                class="text-white bg-red-700 hover:bg-red-800 focus:outline-none font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 transition duration-300"
                 type="button"
                 data-drawer-hide="drawer-right-example"
                 aria-controls="drawer-right-example"
