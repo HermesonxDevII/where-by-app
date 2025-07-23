@@ -26,12 +26,12 @@ class Meeting extends Model
         'meeting_id'
     ];
 
-    protected static function booted()
-    {
-        static::addGlobalScope('endDate', function (Builder $builder) {
-            $builder->where('end_date', '>=', now());
-        });
-    }
+    // protected static function booted()
+    // {
+    //     static::addGlobalScope('endDate', function (Builder $builder) {
+    //         $builder->where('end_date', '>=', now());
+    //     });
+    // }
 
     public $timestamps = true;
 
@@ -52,5 +52,10 @@ class Meeting extends Model
         return Attribute::make(
             fn (string $value) => Carbon::make($value)->subHours(3)->format('d/m/Y H:i')
         );
+    }
+
+    public function scopeOpenMeetings(Builder $builder): void
+    {
+        $builder->where('end_date', '>=', now());
     }
 }
