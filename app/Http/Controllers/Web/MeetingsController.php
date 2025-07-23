@@ -98,10 +98,17 @@ class MeetingsController extends Controller
 
     }
     
+    public function info(Request $request, Meeting $meeting)
+    {
+        return view('meetings.info', compact('meeting'));
+    }
+
     public function history(Request $request)
     {
-        $meetings = Meeting::withoutGlobalScope('endDate')->get();
-        Log::info('meetings', [$meetings]);
+        $meetings = Meeting::withoutGlobalScope('endDate')
+                        ->orderBy('end_date', 'desc')
+                        ->paginate(3);
+
         return view('meetings.history', compact('meetings'));
     }
 

@@ -16,6 +16,16 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    @forelse ($meetings as $meeting)
+                        <x-meeting-card :meeting='$meeting' />
+                    @empty
+                        <div
+                            class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:text-blue-400"
+                            role="alert"
+                        >
+                            <span class="font-medium">Nenhuma reunião encontrada.</span>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
