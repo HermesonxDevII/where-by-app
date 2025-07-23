@@ -23,15 +23,11 @@ class Meeting extends Model
         'room_url',
         'host_room_url',
         'viewer_room_url',
-        'meeting_id'
+        'meeting_id',
+        'primary_color',
+        'secondary_color',
+        'focus_color'
     ];
-
-    // protected static function booted()
-    // {
-    //     static::addGlobalScope('endDate', function (Builder $builder) {
-    //         $builder->where('end_date', '>=', now());
-    //     });
-    // }
 
     public $timestamps = true;
 

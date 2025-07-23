@@ -27,6 +27,9 @@ return new class extends Migration
             $table->text('host_room_url');
             $table->text('viewer_room_url');
             $table->string('meeting_id');
+            $table->string('primary_color')->nullable();
+            $table->string('secondary_color')->nullable();
+            $table->string('focus_color')->nullable();
 
             $table->timestamps();
         });

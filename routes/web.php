@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\{ MeetingsController };
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/meetings/history', [MeetingsController::class, 'history'])->name('meetings.history');
     Route::get('/meetings/info/{meeting}', [MeetingsController::class, 'info'])->name('meetings.info');
+    Route::post('/meetings/change-color/{meeting}', [MeetingsController::class, 'change_color'])->name('meetings.change_color');
     Route::resource('/meetings', MeetingsController::class);
 });
 

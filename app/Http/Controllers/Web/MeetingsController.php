@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{ Log, Http };
-use App\Http\Requests\{ StoreMeetingRequest };
+use App\Http\Requests\{ StoreMeetingRequest, ChangeColorMeetingRequest };
 use App\Models\{ Meeting };
 
 class MeetingsController extends Controller
@@ -114,6 +114,42 @@ class MeetingsController extends Controller
         $user = $meeting->user;
 
         return view('meetings.info', compact('meeting', 'user'));
+    }
+
+    public function change_color(ChangeColorMeetingRequest $request, Meeting $meeting)
+    {
+        $validatedData = $request->validated();
+        
+        $token = getWherebyKey();
+
+        $data = [
+            'tokens' => [
+                'colors' => [
+                    'primary'   => $validatedData['primary_color'],
+                    'secondary' => $validatedData['secondary_color'],
+                    'focus'     => $validatedData['focus_color']
+                ]
+            ],
+            'tokensPreset' => 'custom'
+        ];
+
+        $response = Http::withToken($token)
+            ->put("https://api.whereby.dev/v1/rooms$meeting->room_name/theme/tokens", $data);
+
+        if ($response->failed()) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors(['error' => 'Não foi possível criar a sala de transmissão. Tente novamente mais tarde.']);
+        }
+
+        $meeting->update([
+            'primary_color'   => $validatedData['primary_color'],
+            'secondary_color' => $validatedData['secondary_color'],
+            'focus_color'     => $validatedData['focus_color']
+        ]);
+
+        return back();
     }
 
     public function destroy(Request $request, Meeting $meeting)

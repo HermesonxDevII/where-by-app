@@ -24,7 +24,7 @@ class StoreMeetingRequest extends FormRequest
         return [
             'name'            => 'required|string',
             'description'     => 'nullable|string',
-            'end_dateTime'     => 'required|string',
+            'end_dateTime'    => 'required|string',
             'type'            => 'required|string',
             'record_trigger'  => 'required|string',
             'record_type'     => 'required|string',
