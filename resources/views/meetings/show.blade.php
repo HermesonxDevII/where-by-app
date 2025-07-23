@@ -11,12 +11,14 @@
                     class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2 text-center me-2 transition duration-300"
                 >Sair</a>
 
-                <button
-                    data-modal-target="popup-modal"
-                    data-modal-toggle="popup-modal"
-                    class="text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2 text-center me-2 transition duration-300"
-                    type="button"
-                >Deletar</button>
+                @if ($isHost)
+                    <button
+                        data-modal-target="popup-modal"
+                        data-modal-toggle="popup-modal"
+                        class="text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2 text-center me-2 transition duration-300"
+                        type="button"
+                    >Deletar</button>
+                @endif
             </div>
         </div>
     </x-slot>
