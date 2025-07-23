@@ -27,6 +27,10 @@
                         </div>
                     @endforelse
                 </div>
+
+                <div class="flex flex-row justify-center items-center mb-5">
+                    {{ $meetings->links() }}
+                </div>
             </div>
         </div>
     </div>
