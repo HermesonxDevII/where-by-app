@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\{ MeetingsController };
+use App\Http\Controllers\Web\{ MeetingsController, ProviderController };
 
 Route::get('/', function () {
     return view('auth.login');
@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/meetings/info/{meeting}', [MeetingsController::class, 'info'])->name('meetings.info');
     Route::post('/meetings/change-color/{meeting}', [MeetingsController::class, 'change_color'])->name('meetings.change_color');
     Route::resource('/meetings', MeetingsController::class);
+    Route::resource('/providers', ProviderController::class);
 });
 
 require __DIR__.'/auth.php';
