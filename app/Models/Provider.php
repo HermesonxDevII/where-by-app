@@ -37,7 +37,7 @@ class Provider extends Model
 
   public function isWhereBy(): bool
   {
-    return Str::lower($this->name) === 'where by';
+    return Str::lower($this->name) === 'whereby';
   }
 
   public function isZoom(): bool

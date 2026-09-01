@@ -15,7 +15,7 @@ class ProviderSeeder extends Seeder
   {
     $providers = [
       [
-        'name'         => 'Where By',
+        'name'         => 'WhereBy',
         'base_url'     => 'https://api.whereby.dev/v1',
         'base_api_url' => null
       ],

@@ -8,7 +8,16 @@
     @click="open = !open"
     class="w-full h-14 flex items-center justify-between px-5 hover:bg-gray-200 transition-colors duration-200 cursor-pointer focus:outline-none"
   >
-    <span class="font-bold text-gray-800">{{ $provider->name }}</span>
+    <div class="flex items-center gap-2">
+      {{-- Provider Logo --}}
+      <img
+        src="{{ asset('images/logos/' . strtolower($provider->name) . '.png') }}"
+        alt="Logo {{ $provider->name }}"
+        class="w-9 h-9 rounded-full object-cover shadow-sm border border-gray-200"
+      >
+      
+      <span class="font-bold text-gray-800">{{ $provider->name }}</span>
+    </div>
 
     <div class="flex items-center gap-2">
       {{-- Status --}}
