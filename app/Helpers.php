@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\{ Auth };
+use Illuminate\Support\Facades\{ Log, Auth, Session };
 use Carbon\Carbon;
 
 if (!function_exists('loggedUser')) {
@@ -44,5 +44,26 @@ if (!function_exists('generateSlug')) {
     $string = trim($string, '-');
 
     return $string;
+  }
+}
+
+if (!function_exists('notify')) {
+  function notify($message = '', $icon = 'success')
+  {
+    Session::flash('notification', [
+      'msg'  => $message,
+      'icon' => $icon
+    ]);
+  }
+}
+
+if (!function_exists('reportError')) {
+  function reportError(string $message, \Throwable $e)
+  {
+    Log::error($message, [
+      'message' => $e->getMessage(),
+      'line'    => $e->getLine(),
+      'file'    => $e->getFile(),
+    ]);
   }
 }

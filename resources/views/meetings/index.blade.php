@@ -9,12 +9,12 @@
                 <a
                     href="{{ route('meetings.create') }}"
                     class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2 text-center me-2 transition duration-300"
-                >Criar reunião</a>
+                >{{ __('Criar Reunião') }}</a>
 
                 <a
                     href="{{ route('meetings.history') }}"
                     class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2 text-center me-2 transition duration-300"
-                >Histórico</a>
+                >{{ __('Histórico') }}</a>
             </div>
         </div>
     </x-slot>
@@ -24,7 +24,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <x-alerts />
-                    
+
                     @forelse ($meetings as $meeting)
                         <x-meeting-card :meeting="$meeting" />
                     @empty

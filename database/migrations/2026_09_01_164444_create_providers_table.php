@@ -16,10 +16,10 @@ return new class extends Migration
       $table->string('name')->unique();
       $table->string('base_url');
       $table->string('base_api_url')->nullable();
-      $table->string('account_id')->nullable();
-      $table->string('client_id')->nullable();
-      $table->string('client_secret')->nullable();
-      $table->string('secret_token')->nullable();
+      $table->text('account_id')->nullable();
+      $table->text('client_id')->nullable();
+      $table->text('client_secret')->nullable();
+      $table->text('secret_token')->nullable();
       $table->boolean('active')->default(false);
       $table->timestamps();
     });

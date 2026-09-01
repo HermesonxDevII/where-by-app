@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Provider extends Model
 {
@@ -29,8 +30,18 @@ class Provider extends Model
 
   public $timestamps = true;
 
-  public static function getActive()
+  public static function getActive(): ?self
   {
     return self::where('active', true)->first();
+  }
+
+  public function isWhereBy(): bool
+  {
+    return Str::lower($this->name) === 'where by';
+  }
+
+  public function isZoom(): bool
+  {
+    return Str::lower($this->name) === 'zoom';
   }
 }
